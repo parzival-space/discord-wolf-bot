@@ -1,0 +1,47 @@
+{
+    "default": {
+        "prefix": "!",
+        "volume": 0.2,
+        "freeze": [],
+        "counter": {
+            "online": {
+                "id": "0",
+                "format": "Online: {{COUNT}}"
+            },
+            "member": {
+                "id": "0",
+                "format": "Members: {{COUNT}}"
+            }
+        }
+    },
+    "613019198242816000": {
+        "prefix": "!",
+        "volume": 0.2,
+        "freeze": [],
+        "counter": {
+            "online": {
+                "id": "0",
+                "format": "Online: {{COUNT}}"
+            },
+            "member": {
+                "id": "0",
+                "format": "Members: {{COUNT}}"
+            }
+        }
+    },
+    "616639224820793344": {
+        "prefix": "%",
+        "volume": 0.2,
+        "freeze": [],
+        "counter": {
+            "online": {
+                "id": "703110497033125908",
+                "format": "Online: {{COUNT}}"
+            },
+            "member": {
+                "id": "703110242019311626",
+                "format": "Mitglieder: {{COUNT}}"
+            }
+        }
+    }
+}

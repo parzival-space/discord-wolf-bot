@@ -1,0 +1,16 @@
+{
+    "colors": {
+        "announce": "0xCCCCC3",
+        "warning": "0x7D7C76",
+        "critical": "0x050505"
+    },
+
+    "logging": {
+        "error": true,
+        "warn": true,
+        "info": true,
+        "debug": false,
+        
+        "ClearCmdOnStart": true
+    }
+}

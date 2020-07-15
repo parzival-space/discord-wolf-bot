@@ -335,7 +335,7 @@ bot.sendInfo = function(channel, reason) {
 };
 
 bot.on("ready", () => {
-    bot.user.setActivity("with problems.", {type: "LISTENING"});
+    bot.user.setActivity("with problems.");
 });
 
 

@@ -1,9 +1,21 @@
-[
-    {
-        "id": "default",
-        "name": "default",
-        "options": {
-            "prefix": "§"
+[{
+    "id": "616639224820793344",
+    "name": "FT22B - Sexy Mother",
+    "options": {
+        "prefix": "§",
+        "joinrole": {
+            "enabled": false,
+            "roles": []
         }
     }
-]
+}, {
+    "id": "616639224820793344",
+    "name": "FT22B - Sexy Mother",
+    "options": {
+        "prefix": "§",
+        "joinrole": {
+            "enabled": false,
+            "roles": []
+        }
+    }
+}]

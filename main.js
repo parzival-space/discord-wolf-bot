@@ -75,7 +75,7 @@ bot.registerPlugins = function() {
             
                 case "ADDON":
                     // Addons stellen Erweiterungen für Plugins dar und sollten darher nach ihnen geladen werden.
-                    loadOrder.addons.push(plugin);
+                    loadOrder.addon.push(plugin);
                     break;
 
                 case "OVERWRITE":
@@ -100,10 +100,14 @@ bot.registerPlugins = function() {
                     // API v1: Es müssen keine gesonderten Argumente übergeben werden. Wird meistens von Overwrites verwendet.    
                     plugin.run();
                     break;
+                case 2:
+                    // API v2: Übergibt einfache Information wie die Bot-Instanze
+                    plugin.run(bot);
+                    break;
             
                 default:
                     // API v?: Die Api Version ist nicht bekannt. Das Plugin wird nicht geladen!
-                    console.error(`Failed to load Plugin '${plugins.help.name}': Unknown Api Version!`)
+                    console.error(`Failed to load Plugin '${plugin.help.name}': Unknown Api Version!`)
                     break;
             }
             return;
@@ -113,19 +117,19 @@ bot.registerPlugins = function() {
         // PLUGIN => UNKNOWN => ADDON => OVERWRITE
         var pluginCount = loadOrder.plugin.length + loadOrder.unknown.length + loadOrder.addon.length + loadOrder.overwrite.length;
         loadOrder.plugin.forEach((plugin, i) => {
-            console.log(`Loading Plugin ${i + 1} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
+            console.log(`Loading Plugin '${plugin.help.name}' ${i + 1} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
             loadPlugin(plugin);
         });
         loadOrder.unknown.forEach((plugin, i) => {
-            console.log(`Loading Plugin ${loadOrder.plugin.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
+            console.log(`Loading Plugin '${plugin.help.name}' ${loadOrder.plugin.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
             loadPlugin(plugin);
         });
         loadOrder.addon.forEach((plugin, i) => {
-            console.log(`Loading Plugin ${loadOrder.plugin.length + loadOrder.unknown.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
+            console.log(`Loading Plugin '${plugin.help.name}' ${loadOrder.plugin.length + loadOrder.unknown.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
             loadPlugin(plugin);
         });
         loadOrder.overwrite.forEach((plugin, i) => {
-            console.log(`Loading Plugin ${loadOrder.plugin.length + loadOrder.addon.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
+            console.log(`Loading Plugin '${plugin.help.name}' ${loadOrder.plugin.length + loadOrder.addon.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
             loadPlugin(plugin);
         });
     });
@@ -143,7 +147,7 @@ bot.beginnCommandHandle = function() {
         if (msg.author.bot) return;
         if (msg.channel.type === 'dm') return;
     
-        // Der Prefix wird abhängig von dem Server geladen. (TODO: Erstelle einen Guild-Konfigurations-Handler)
+        // Der Prefix wird abhängig von dem Server geladen.
         let prefix = bot.getGuildConfig(msg.guild).options.prefix;
     
         // Die Nachricht wird auf eventuelle Befehle überprüft.
@@ -164,16 +168,22 @@ bot.beginnCommandHandle = function() {
                     res.setDescription("Your rights are not sufficient to use this command.\nIf you think this is an error, please contact the server team.");
                     res.setThumbnail("https://i.imgur.com/uBRXask.png");
                     res.setColor(0xFF0000);
-                    return msg.channel.send(res);
-                }
+                    msg.channel.send(res);
 
+                    // Sendet eine Warnung an die Konsole
+                    return msg.delete({timeout: 500, reason: "Command failed: Insufficient Permissions."}).then((msg) => {
+                        console.warn(`${msg.author.tag} tried to executed command '${prefix}${cmdfile.help.name}' in channel '${msg.channel.name}' on guild '${msg.guild.name}' with following arguments: '${args}'`);
+                    });
+                }
+                
                 // Führe den Befehl aus.
                 cmdfile.run(bot, msg, args);
-
+                
                 // Die Nachricht die den Befehl ausgelöst hat wird gelöscht.
                 msg.delete({timeout: 500, reason: "Command executed."}).then((msg) => {
                     console.log(`${msg.author.tag} executed command '${prefix}${cmdfile.help.name}' in channel '${msg.channel.name}' on guild '${msg.guild.name}' with following arguments: '${args}'`);
                 });
+
             }
         }
     });
@@ -192,14 +202,14 @@ bot.initGuildHandler = function() {
 
     // Erstellt eine Funtkion um die guild Konfiguration im Notfall neu zu laden.
     bot.reloadGuildHandler = function() {
-        bot.data.guilds = require('./data/guilds.js');
+        bot.data.guilds = require('./data/guilds.json');
         return bot.data.guilds;
     }
 
     // Erstellt eine Funtkion um die guild Konfiguration zu speichern.
     bot.writeGuildHandler = function() {
         var text = JSON.stringify(bot.data.guilds);
-        fs.writeFileSync(join(__dirname, 'data', 'guilds.js'), text);
+        fs.writeFileSync(join(__dirname, 'data', 'guilds.json'), text);
         return text;
     }
 
@@ -209,6 +219,7 @@ bot.initGuildHandler = function() {
         data.id = guild.id;
         data.name = guild.name;
         bot.data.guilds.push(data);
+        bot.writeGuildHandler();
         return data;
     }
 
@@ -271,7 +282,8 @@ bot.login(process.env.TOKEN).then(() => {
                 "    +#++:++#:  +#++:++#++: +#+        +#+        +#+    +:+ +#+    +:+ +#+ +:+ +#+          +#++:++#+  +#+    +:+    +#+        \n"+
                 "   +#+    +#+ +#+     +#+ +#+        +#+        +#+    +#+ +#+    +#+ +#+  +#+#+#          +#+    +#+ +#+    +#+    +#+         \n"+
                 "  #+#    #+# #+#     #+# #+#    #+# #+#    #+# #+#    #+# #+#    #+# #+#   #+#+#          #+#    #+# #+#    #+#    #+#          \n"+
-                " ###    ### ###     ###  ########   ########   ########   ########  ###    ####          #########   ########     ###           \n");
+                " ###    ### ###     ###  ########   ########   ########   ########  ###    ####          #########   ########     ###           \n"+
+                `                                                     Raccoon Bot v${require('./package.json').version}`);
 
     // Der Bot ist mit Discord Verbunden. Zeit für ein paar Post-Startup-Skripte
     bot.reagisterCommands();
@@ -286,5 +298,8 @@ bot.login(process.env.TOKEN).then(() => {
 // Wenn der Bot mit allen Post-Startup-Skripten fertig ist beginnt die eigentliche Arbeit.
 bot.once('ready', () => {
     console.log(`${bot.user.tag} successfully connected.`);
-    bot.user.setActivity("you", {type: "LISTENING"});
+    bot.user.setActivity("Destroid 8 Annihilate", {
+        type: "LISTENING", 
+        url: "https://open.spotify.com/track/6xbwZag48lCcSQtF377VXf"
+    });
 })

@@ -1,6 +1,6 @@
 {
   "name": "discord-raccoon-bot",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Discord Raccoon Bot",
   "main": "main.js",
   "scripts": {
@@ -24,6 +24,7 @@
   "dependencies": {
     "colors": "^1.4.0",
     "discord.js": "^12.2.0",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
   }
 }

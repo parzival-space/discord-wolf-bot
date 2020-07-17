@@ -1,5 +1,5 @@
 /**
- * @name joinrole.js
+ * @name raccoon-joinrole.js
  * @description Erstellt ein universellen Handler der Rollen beim beitritt eines neuen Mitgliedes vergibt.
  * @author Parzival
  * @version 1.0.0.0
@@ -45,5 +45,5 @@ module.exports.run = function(bot) {
 module.exports.help = {
     apiVersion: 2,
     pluginType: "ADDON",
-    name: "joinrole"
+    name: "raccoon-joinrole"
 }

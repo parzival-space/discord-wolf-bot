@@ -16,7 +16,7 @@ module.exports.run = function (bot, msg, args) {
 
     var m = new DiscordJS.MessageEmbed();
     m.setAuthor(`${bot.user.username} - About`, bot.user.avatarURL);
-    m.setTitle(title);
+    m.setTitle(title, data.url);
     m.setDescription(data.description);
     m.addField(`Version`, data.version, true);
     m.addField(`Author`, `<@!${data.author.id}>`, true);

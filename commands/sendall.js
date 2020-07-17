@@ -23,36 +23,33 @@ module.exports.run = function (bot, msg, args) {
 
     // Verarbeitet benötigte Daten
     var success = 0;
-    msg.guild.members.fetch().then(members => {
-        var message = "";
-        args.forEach((arg, i) => {
-            message = `${message}${arg}`;
-            if (i != (args.length - 1)) message = `${message} `;
-        });
+    var members = msg.guild.members.cache;
+    var message = "";
+    args.forEach((arg, i) => {
+        message = `${message}${arg}`;
+        if (i != (args.length - 1)) message = `${message} `;
+    });
 
-        // Bereite die Nachricht vor die an alle Mitglieder gesendet werden soll.
-        var message = new DiscordJS.MessageEmbed()
-            .setAuthor(`Message from ${msg.guild.name}`, msg.author.avatarURL())
-            .setThumbnail(msg.guild.iconURL())
-            .setFooter(`Message sent by ${msg.author.tag}`)
-            .setDescription(message);
+    // Bereite die Nachricht vor die an alle Mitglieder gesendet werden soll.
+    var message = new DiscordJS.MessageEmbed()
+        .setAuthor(`Message from ${msg.guild.name}`, msg.author.avatarURL())
+        .setThumbnail(msg.guild.iconURL())
+        .setFooter(`Message sent by ${msg.author.tag}`)
+        .setDescription(message);
 
-        // Sendet die Nachricht an alle Mitglieder aus dem Server
-        members.forEach((member) => {
-            member.send(message).then(() => {
-                success = success + 2;
-            }).catch(err => {})
-        });
-    }).finally(() => {
-
-        // Sendet Feedback in den Kanal
-        var res = new DiscordJS.MessageEmbed()
-            .setDescription("Message successfully sent.\nIt may take a while for the message to reach everyone.")
-            .setColor(0x000000)
-            .setAuthor(`${bot.user.username} - SendAll`, bot.user.avatarURL());
-        msg.channel.send(res);
-
-    })
+    // Sendet die Nachricht an alle Mitglieder aus dem Server
+    members.forEach((member) => {
+        member.send(message).then(() => {
+            success = success + 2;
+        }).catch(err => {})
+    });
+    
+    // Sendet Feedback in den Kanal
+    var res = new DiscordJS.MessageEmbed()
+        .setDescription("Message successfully sent.\nIt may take a while for the message to reach everyone.")
+        .setColor(0x000000)
+        .setAuthor(`${bot.user.username} - SendAll`, bot.user.avatarURL());
+    msg.channel.send(res);
 
 };
 

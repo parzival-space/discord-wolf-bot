@@ -6,6 +6,7 @@ const data = require('../package.json');
  * @param {DiscordJS.Client} bot
  * @param {DiscordJS.Message} msg
  * @param {string[]} args
+ * Last
  */
 module.exports.run = function (bot, msg, args) {
 
@@ -14,13 +15,14 @@ module.exports.run = function (bot, msg, args) {
         title = `${title}${x.substr(0,1).toUpperCase() + x.substr(1)} `;
     });
 
-    var m = new DiscordJS.MessageEmbed();
-    m.setAuthor(`${bot.user.username} - About`, bot.user.avatarURL);
-    m.setTitle(title, data.url);
-    m.setDescription(data.description);
-    m.addField(`Version`, data.version, true);
-    m.addField(`Author`, `<@!${data.author.id}>`, true);
-    m.setImage('https://i.imgur.com/TVY6FGJ.jpg');
+    var m = new DiscordJS.MessageEmbed()
+        .setAuthor(`${bot.user.username} - About`, bot.user.avatarURL)
+        .setTitle(title)
+        .setURL(data.url)
+        .setDescription(data.description)
+        .addField(`Version`, data.version, true)
+        .addField(`Author`, `<@!${data.author.id}>`, true)
+        .setImage('https://i.imgur.com/TVY6FGJ.jpg');
     return msg.channel.send(m);
 
 };

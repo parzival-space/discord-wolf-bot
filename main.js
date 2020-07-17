@@ -210,17 +210,20 @@ bot.initGuildHandler = function() {
     bot.writeGuildHandler = function() {
         var text = JSON.stringify(bot.data.guilds);
         fs.writeFileSync(join(__dirname, 'data', 'guilds.json'), text);
+        bot.reloadGuildHandler();
         return text;
     }
 
     // Erstellt eine Funtkion um eine guild Konfiguration anhand einer Beispiel Konfiguration zu erstellen.
     bot.createGuildConfig = function(guild) {
-        var data = bot.getGuildConfig({id: "default"});
-        data.id = guild.id;
-        data.name = guild.name;
-        bot.data.guilds.push(data);
+        var template = bot.getGuildConfig({id: "0"});
+        bot.data.guilds.push({
+            id: guild.id,
+            name: guild.name,
+            options: template.options
+        });
         bot.writeGuildHandler();
-        return data;
+        return bot.data.guilds.find(g => g.id === guild.id);
     }
 
     /**

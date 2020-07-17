@@ -1,8 +1,8 @@
 /**
  * @name app-heroku.js
- * @description Dieses Plugin ermöglicht es der Anwendung permanent aktiv zu bleiben.
+ * @description Dieses Plugin ermöglicht es der Anwendung auf Heroku permanent aktiv zu bleiben.
  * @author Parzival
- * @version 1.0.0.0
+ * @version 1.0.0.1
  */
 
 // Dieses Plugin benötigt weitere Module die noch nachgeladen werden müssen.

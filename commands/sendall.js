@@ -7,7 +7,7 @@ const DiscordJS = require('discord.js');
  * @param {DiscordJS.Message} msg
  * @param {string[]} args
  */
-module.exports.run = function (bot, msg, args) {
+module.exports.run = async function (bot, msg, args) {
 
     // Sendet eine Fehler-Nachricht sollte eine Nachricht gegeben sein die an alle geschickt werden ann.
     if (args.length < 1) {
@@ -16,7 +16,7 @@ module.exports.run = function (bot, msg, args) {
             .setTitle("You must provide at least one argument to use this command.")
             .setDescription(`Syntax: ${prefix}sendall <message>`)
             .setThumbnail("https://i.imgur.com/L9H79Sj.png")
-            .setAuthor("Missing argument", bot.user.avatarURL)
+            .setAuthor("Missing argument", bot.user.avatarURL())
             .setColor(0x000000);
         return msg.channel.send(err);
     }

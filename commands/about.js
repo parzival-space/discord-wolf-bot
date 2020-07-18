@@ -8,7 +8,7 @@ const data = require('../package.json');
  * @param {string[]} args
  * Last
  */
-module.exports.run = function (bot, msg, args) {
+module.exports.run = async function (bot, msg, args) {
 
     var title = "";
     data.name.split('-').forEach(x => {
@@ -16,7 +16,7 @@ module.exports.run = function (bot, msg, args) {
     });
 
     var m = new DiscordJS.MessageEmbed()
-        .setAuthor(`${bot.user.username} - About`, bot.user.avatarURL)
+        .setAuthor(`${bot.user.username} - About`, bot.user.avatarURL())
         .setTitle(title)
         .setURL(data.url)
         .setDescription(data.description)

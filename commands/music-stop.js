@@ -1,5 +1,4 @@
 const DiscordJS = require('discord.js');
-const data = require('../package.json');
 
 /**
  * Dieser Befehl zeigt Informationen über den Bot an.
@@ -7,10 +6,11 @@ const data = require('../package.json');
  * @param {DiscordJS.Message} msg
  * @param {string[]} args
  */
-module.exports.run = function (bot, msg, args) {
+module.exports.run = async function (bot, msg, args) {
     if (msg.guild.voice) {
         if (msg.guild.voice.connection) {
             stopVoice(bot, msg, args);
+            msg.channel.send(`**${msg.author.username}** stopped the current playback.`);
         }
     } else {
         msg.channel.send("What do you want to stop? There is no active playback running.");
@@ -25,6 +25,10 @@ function stopVoice(bot, msg, args) {
     });
     if (s == -1) return;
 
+    // Trenne die Verbindung
+    msg.guild.voice.connection.disconnect();
+
+    // Lösche dispatcher
     return bot.music.server[s].dispatcher.destroy();
 }
 
@@ -35,6 +39,8 @@ module.exports.help = {
     name: 'stop',
     description: 'Stops the current playback.',
     args: '',
-    hidden: true,
-    permissions: []
+    hidden: false,
+    permissions: [
+        "CONNECT"
+    ]
 };

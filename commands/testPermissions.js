@@ -7,7 +7,7 @@ const DiscordJS = require('discord.js');
  * @param {DiscordJS.Message} msg
  * @param {string[]} args
  */
-module.exports.run = function (bot, msg, args) {
+module.exports.run = async function (bot, msg, args) {
 
     return msg.channel.send("OK!");
 
@@ -17,7 +17,7 @@ module.exports.run = function (bot, msg, args) {
  * @description Stellt wichtige initialisierungs Informationen für die einbindung des Befehls bereit. 
  */
 module.exports.help = {
-    name: 'testPerms',
+    name: 'testperms',
     description: 'Testing your Permissions?',
     args: '[number]',
     hidden: true,

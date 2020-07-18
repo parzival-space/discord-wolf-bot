@@ -7,7 +7,7 @@ const DiscordJS = require('discord.js');
  * @param {DiscordJS.Message} msg
  * @param {string[]} args
  */
-module.exports.run = function (bot, msg, args) {
+module.exports.run = async function (bot, msg, args) {
 
     // Es gibt mehrere Sub-Commands
     // add - Fügt eine Rolle zu dem Join-Role Setup hinzu
@@ -23,7 +23,7 @@ module.exports.run = function (bot, msg, args) {
             .setTitle("You must provide at least one argument to use this command.")
             .setDescription(`Syntax: ${prefix}joinrole <enable/disable/add/remove/toggle> [@mention]`)
             .setThumbnail("https://i.imgur.com/L9H79Sj.png")
-            .setAuthor("Missing argument", bot.user.avatarURL)
+            .setAuthor("Missing argument", bot.user.avatarURL())
             .setColor(0x000000);
         return msg.channel.send(err);
     }
@@ -107,7 +107,7 @@ function MissingArgument(bot, msg, args) {
         .setTitle("You need to mention at least one role.")
         .setDescription(`Syntax: ${prefix}joinrole <add/remove> <@mention>`)
         .setThumbnail("https://i.imgur.com/L9H79Sj.png")
-        .setAuthor("Missing argument", bot.user.avatarURL)
+        .setAuthor("Missing argument", bot.user.avatarURL())
         .setColor(0x000000);
     return msg.channel.send(err);
 }
@@ -193,7 +193,7 @@ function SubUnknown(bot, msg, args) {
         .setTitle("There are only five subcommands.")
         .setDescription(`Syntax: ${prefix}joinrole <enable/disable/add/remove/toggle> [@mention]`)
         .setThumbnail("https://i.imgur.com/L9H79Sj.png")
-        .setAuthor("Unknown subcommand", bot.user.avatarURL)
+        .setAuthor("Unknown subcommand", bot.user.avatarURL())
         .setColor(0x000000);
     return msg.channel.send(err);
 }

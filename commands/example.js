@@ -7,18 +7,20 @@ const data = require('../package.json');
  * @param {DiscordJS.Message} msg
  * @param {string[]} args
  */
-module.exports.run = function (bot, msg, args) {
+module.exports.run = async function (bot, msg, args) {
     // Dieser Befehl ist eine Beispiel-Forlage
-    msg.channel.send("Fuck you!");
+
 };
 
 /**
  * Command description
  */
 module.exports.help = {
-    name: 'adminplease',
+    name: 'test',
     description: 'Yup. I\'m a description',
     args: '',
     hidden: true,
-    permissions: []
+    permissions: [
+        "ADMINISTRATOR"
+    ]
 };

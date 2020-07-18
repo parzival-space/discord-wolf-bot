@@ -12,20 +12,25 @@ module.exports.run = async function (bot, msg, args) {
     bot.music.server.forEach((c, i) => {
         if (c.id === msg.channel.guild.id) s = i;
     });
-    if (s == -1) return;
+    //if (s == -1) return;
+
+    var search = `${args[0] || ""}`;
+    if (s != -1) {
+        if (bot.music.server[s].queue[0] && search == "") search = bot.music.server[s].queue[0].title;
+    }
 
     // Diese Nachricht zeigt dem Benutzer das der Bot nach den Lyrics des aktuellen Liede Sucht
-    var waiter = msg.channel.send(new DiscordJS.MessageEmbed().setDescription("Searching..."));
+    var waiter = msg.channel.send(new DiscordJS.MessageEmbed().setDescription("Looking up lyrics..."));
 
     // Sucht nach dem richtigen Titel
-    var title = await requestTitleFor(bot.music.server[s].queue[0].title);
+    var title = await requestTitleFor(search);
 
     // Sucht nach den Lyrics und dann nach Icon und Author
     var lyrics = await requestLyricsFor(title);
     var icon = await requestIconFor(title);
     var author = await requestAuthorFor(title);
 
-    if (lyrics.length > 2040) lyrics = lyrics.slice(0, 2040);
+    if (lyrics.length > 2040) lyrics = `${lyrics.slice(0, 2040)}...`;
 
     (await waiter).delete();
 
@@ -34,6 +39,7 @@ module.exports.run = async function (bot, msg, args) {
         .setTitle(`${author} - ${title}`)
         .setDescription(`${lyrics}`)
         .setImage(`${icon}`)
+        .setFooter("This command is WIP and may not work as expected.")
         .setColor(0x000000);
     return msg.channel.send(resp)
 
@@ -47,6 +53,8 @@ module.exports.help = {
     name: 'lyrics',
     description: 'Lyrics baby!',
     args: '[song title]',
-    hidden: true,
-    permissions: []
+    hidden: false,
+    permissions: [
+        "CONNECT"
+    ]
 };

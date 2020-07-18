@@ -2,6 +2,7 @@ const DiscordJS = require('discord.js');
 const fs = require('fs');
 const {join} = require('path');
 const { Console } = require('console');
+const { raw } = require('express');
 require('dotenv').config();
 
 /**
@@ -149,16 +150,24 @@ bot.beginnCommandHandle = function() {
     
         // Der Prefix wird abhängig von dem Server geladen.
         let prefix = bot.getGuildConfig(msg.guild).options.prefix;
+        let altPrefix1 = `<@!${bot.user.id}>`;
+        let altPrefix2 = `${bot.user.id.replace("!", "&")}`;
     
         // Die Nachricht wird auf eventuelle Befehle überprüft.
-        if (msg.content.toString().split('')[0] === prefix) {
-    
-            let msgArrays = msg.content.toString().split(' ');
+        if (msg.content.toString().split('')[0] === prefix) ExecuteCommand(false);
+        else if (msg.content.startsWith(altPrefix1) == true) ExecuteCommand(true);
+        else if (msg.content.startsWith(altPrefix2) == true) ExecuteCommand(true);
+
+        // Führt den Befehl aus
+        function ExecuteCommand(useAltPrefix) {
+            var rawMsg = msg.content.toString();
+            if (useAltPrefix) rawMsg = `${prefix}${msg.content.toString().substring(altPrefix1.length + 1)}`;
+            let msgArrays = rawMsg.split(' ');
             let cmd = msgArrays[0];
             let args = msgArrays.slice(1);
     
             // Es wird versucht einen Befehl abzurufen, sollte einer vorhanden sein.
-            let cmdfile = bot.commands.get(cmd.slice(prefix.length));
+            let cmdfile = bot.commands.get(cmd.slice(prefix.length).toLowerCase());
             if (cmdfile) {
                 // Die Rechte des Benutzers werden überprüft.
                 if (msg.member.permissions.has(cmdfile.help.permissions) != true) {
@@ -176,12 +185,21 @@ bot.beginnCommandHandle = function() {
                     });
                 }
                 
-                // Führe den Befehl aus.
-                cmdfile.run(bot, msg, args);
-                
                 // Die Nachricht die den Befehl ausgelöst hat wird gelöscht.
                 msg.delete({timeout: 500, reason: "Command executed."}).then((msg) => {
                     console.log(`${msg.author.tag} executed command '${prefix}${cmdfile.help.name}' in channel '${msg.channel.name}' on guild '${msg.guild.name}' with following arguments: '${args}'`);
+                });
+                
+                // Führe den Befehl aus.
+                cmdfile.run(bot, msg, args).catch(err => {
+                    var errMsg = new DiscordJS.MessageEmbed()
+                        .setAuthor(`${bot.user.username} - Error`, bot.user.avatarURL())
+                        .setTitle("Failed to execute the command")
+                        .setDescription(`${err}`)
+                        .setThumbnail("https://i.imgur.com/Fk96p9z.png")
+                        .setColor(0x000000);
+                    msg.channel.send(errMsg);
+                    console.error(`Failed to execute command '${cmd}' with arguments '${args}': ${err}`);
                 });
 
             }
@@ -268,6 +286,49 @@ bot.initGuildHandler = function() {
         return bot.data.guilds;
     }
 
+    /**
+     * @description Überprüft ob eine Konfiguration für den angegebennen Discord verfügbar ist.
+     * @param {DiscordJS.Guild} guild
+     * @returns {boolean}
+     */
+    bot.hasGuildConfig = function(guild) {
+        // Versucht eine Konfiguration zu finden
+        var config = bot.data.guilds.find(g => g.id === guild.id);
+
+        // Wenn keine gefunden wurde, ist config = undefined
+        if (config == undefined) return false;
+        return true;
+    }
+
+    /**
+     * @description Setzt eine Server-Konfiguration wieder auf die standartwerte zurück.
+     * @param {DiscordJS.Guild} guild
+     */
+    bot.resetGuildConfig = function(guild) {
+        // Erst muss überprüft werden ob überhaupt eine Server-Konfiguration vorhanden ist
+        if (bot.hasGuildConfig(guild)) {
+            // Es wurde eine Server-Konfiguration gefunden.
+            
+            // Es wird die aktuelle Konfiguration gesucht.
+            var oldConfig = bot.getGuildConfig(guild);
+            var template = bot.getGuildConfig({id: "0"});
+
+            // Aktualisiere die Basis-Informationen
+            oldConfig.id = guild.id;
+            oldConfig.name = guild.name;
+
+            // Lösche alle Server-Einstellung
+            oldConfig.options = template.options;
+
+            // Speichere die neuen Einstellung
+            bot.setGuildConfig(guild, oldConfig);
+        } else {
+            // Es wurde kein Eintrag für diesen Server gefunden.
+
+            // Erstelle einen  neuen Eintrag für diesen Server
+            bot.setGuildConfig(guild, bot.getGuildConfig({id: "0"}));
+        }
+    }
 }
 
 
@@ -301,7 +362,7 @@ bot.login(process.env.TOKEN).then(() => {
 // Wenn der Bot mit allen Post-Startup-Skripten fertig ist beginnt die eigentliche Arbeit.
 bot.once('ready', () => {
     console.log(`${bot.user.tag} successfully connected.`);
-    bot.user.setActivity("Destroid 8 Annihilate", {
+    bot.user.setActivity("§help", {
         type: "LISTENING", 
         url: "https://open.spotify.com/track/6xbwZag48lCcSQtF377VXf"
     });

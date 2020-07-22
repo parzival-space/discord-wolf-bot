@@ -137,6 +137,18 @@ bot.registerPlugins = function() {
 }
 
 /**
+ * @description Bereitet den Bot auf das laden mehrerer Sprachen vor
+ * @author Parzival
+ */
+/*bot.beginnLanguageHandle = function() {
+    // Lade alle Language-Dateien
+    var langsRaw = fs.readdirSync(join(__dirname, 'lang'));
+    let langs = langsRaw.filter(f => f.split('.').pop() === 'json');
+
+    console.log(`Detected ${langs.length} aviable languages.`);
+}*/
+
+/**
  * @description Ermöglicht das automatische laden eines Befehls dessen Script bereits registriert wurde.
  * @author Parzival
  */
@@ -353,6 +365,7 @@ bot.login(process.env.TOKEN).then(() => {
     bot.reagisterCommands();
     bot.initGuildHandler();
     bot.registerPlugins();
+    //bot.beginnLanguageHandle();
 
     // Nachdem der Bot mit seinem Post-Startup-Gedöns fertig ist kann er endlich anfangen Befehle anzunehmen.
     bot.beginnCommandHandle();

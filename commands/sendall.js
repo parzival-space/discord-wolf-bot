@@ -46,7 +46,8 @@ module.exports.run = async function (bot, msg, args) {
     
     // Sendet Feedback in den Kanal
     var res = new DiscordJS.MessageEmbed()
-        .setDescription("Message successfully sent.\nIt may take a while for the message to reach everyone.")
+        .setTitle("Message successfully sent.")
+        .setDescription("It may take a while for the message to reach everyone.")
         .setColor(0x000000)
         .setAuthor(`${bot.user.username} - SendAll`, bot.user.avatarURL());
     msg.channel.send(res);

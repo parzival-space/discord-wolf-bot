@@ -22,17 +22,32 @@ module.exports.run = function (bot) {
     bot.music = {};
     bot.music.server = [{
         id: "default",
-        queue: [{
+        queue: [/*{
             id: "videoID",
             title: "Default Title",
             url: "Default url",
             author: "Default Channel",
             image: "Default Image"
 
-        }],
+        }*/],
         rewind: [],
         volume: 0.20
     }];
+
+    // Bereitet den Musikplayer dür alle Sever vor.
+    bot.on("ready", () => {
+        bot.guilds.cache.forEach(guild => {
+            var entry = {
+                id: guild.id,
+                queue: [],
+                rewind: [],
+                volume: 0.20
+            };
+            entry.id = guild.id;
+            entry.volume = bot.getGuildConfig(guild).options.volume;
+            bot.music.server.push(entry);
+        });
+    });
 
     /**
      * @description Fügt eine PlayAudio-Funktion hinzu die für die eigentliche wiedergabe zuständig ist.

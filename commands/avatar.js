@@ -11,7 +11,7 @@ module.exports.run = async function (bot, msg, args) {
     // Wurden eine Person erwähnt?
     var user = msg.author;
     if (args[0]) {
-        var target = msg.guild.members.cache.find(m => m.id === args[0].replace("<@!", "").replace("<@&", "").replace(">", ""));
+        var target = msg.guild.members.cache.find(m => m.id === args[0].replace("<@", "").replace("!", "").replace("<@&", "").replace(">", ""));
         if (target != undefined) user = target.user;
         else {
             var m = new DiscordJS.MessageEmbed()

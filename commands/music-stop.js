@@ -29,6 +29,7 @@ function stopVoice(bot, msg, args) {
     msg.guild.voice.connection.disconnect();
 
     // Lösche dispatcher
+    bot.music.server[s].queue = [];
     return bot.music.server[s].dispatcher.destroy();
 }
 

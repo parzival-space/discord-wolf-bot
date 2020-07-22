@@ -1,1 +1,34 @@
-[{"id":"0","name":"default","options":{"prefix":"§","joinrole":{"enabled":false,"roles":[]}}},{"id":"616639224820793344","name":"FT22B - Sexy Mother","options":{"prefix":"!","joinrole":{"enabled":false,"roles":[]}}},{"id":"698830867287506984","name":"Custom Emoji","options":{"prefix":"§","joinrole":{"enabled":false,"roles":[]}}}]
+[{
+    "id": "0",
+    "name": "default",
+    "options": {
+        "prefix": "§",
+        "volume": 0.2,
+        "joinrole": {
+            "enabled": false,
+            "roles": []
+        }
+    }
+}, {
+    "id": "698830867287506984",
+    "name": "Custom Emoji",
+    "options": {
+        "prefix": "§",
+        "volume": 0.2,
+        "joinrole": {
+            "enabled": false,
+            "roles": []
+        }
+    }
+}, {
+    "id": "616639224820793344",
+    "name": "FT22B - Sexy Mother",
+    "options": {
+        "prefix": "!",
+        "volume": 0.1,
+        "joinrole": {
+            "enabled": false,
+            "roles": []
+        }
+    }
+}]

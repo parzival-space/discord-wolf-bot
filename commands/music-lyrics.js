@@ -23,12 +23,12 @@ module.exports.run = async function (bot, msg, args) {
     var waiter = msg.channel.send(new DiscordJS.MessageEmbed().setDescription("Looking up lyrics..."));
 
     // Sucht nach dem richtigen Titel
-    var title = await requestTitleFor(search);
+    var title = await requestTitleFor(search).catch(() => {return null;});
 
     // Sucht nach den Lyrics und dann nach Icon und Author
-    var lyrics = await requestLyricsFor(title);
-    var icon = await requestIconFor(title);
-    var author = await requestAuthorFor(title);
+    var lyrics = await requestLyricsFor(encodeURI(search)).catch(() => {return null;});
+    var icon = await requestIconFor(encodeURI(search)).catch(() => {return null;});
+    var author = await requestAuthorFor(encodeURI(search)).catch(() => {return null;});
 
     if (lyrics.length > 2040) lyrics = `${lyrics.slice(0, 2040)}...`;
 

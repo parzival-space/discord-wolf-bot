@@ -70,7 +70,5 @@ module.exports.help = {
     description: 'Testing your Permissions?',
     args: '[number]',
     hidden: true,
-    permissions: [
-        "ADMINISTRATOR"
-    ]
+    permissions: []
 };

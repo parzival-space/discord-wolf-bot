@@ -1,4 +1,19 @@
-# 1.4.0 - Disco-Coon
+
+# Version History
+
+## 1.4.1 - Disco-Coon
+
+- Fixes
+  - Nichts
+- Neue Funktion
+  - 'back' Befehl hinzugefügt.
+- Entfernt
+  - Nichts
+- Anmerkung:
+  - Der 'back' Befehl nutzt aktuell einen Workaround (Hack) um den nullten Eintrag der Queue anzugeben.
+    In Zukunft könnte dies für Fehler sorgen.
+
+## 1.4.0 - Disco-Coon
 
 - Fixes
   - 'stop' Befehl löscht Playlist nicht.

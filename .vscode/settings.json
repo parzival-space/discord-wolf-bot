@@ -2,10 +2,10 @@
   "files.exclude": {
     "package-lock.json": true,
     ".gitattributes": true,
-    ".gitignore": true,
     ".vscode": true,
     "**/node_modules": true,
     "**/node_modules.*": true,
-    "discord-raccoon-bot.code-workspace": true
+    "discord-raccoon-bot.code-workspace": true,
+    ".gitignore": true
   }
 }

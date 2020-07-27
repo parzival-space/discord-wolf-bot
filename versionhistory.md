@@ -1,6 +1,19 @@
 
 # Version History
 
+## 1.4.3.1 - Hotfix
+
+- Fixes
+  - Korrigierte einen Fehler der Heroku daran gehindert hat die Anwendung zu starten. Mal wieder.
+- Neue Funktion
+  - Nichts
+- Entfernt
+  - Nichts
+- Änderung
+  - Nichts
+- Anmerkung
+  - Nichts
+
 ## 1.4.3 - Hotfix
 
 - Fixes

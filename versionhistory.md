@@ -1,6 +1,19 @@
 
 # Version History
 
+## 1.4.3.2 - Hotfix
+
+- Fixes
+  - Hört das eigentlich auch mal auf?
+- Neue Funktion
+  - Nichts
+- Entfernt
+  - Nichts
+- Änderung
+  - Nichts
+- Anmerkung
+  - Nichts
+
 ## 1.4.3.1 - Hotfix
 
 - Fixes

@@ -1,6 +1,6 @@
 {
   "name": "discord-raccoon-bot",
-  "version": "1.4.3.1",
+  "version": "1.4.3.2",
   "description": "Multi-Purpose Moderation / Auto-Moderation / Logging Bot",
   "url": "https://discordapp.com/oauth2/authorize?client_id=732918269333340230&scope=bot&permissions=8",
   "main": "./main.js",
@@ -37,6 +37,6 @@
     "ytdl-core": "^3.1.2"
   },
   "engines": {
-    "node": ">=12.18.1"
+    "node": "12.18.1"
   }
 }

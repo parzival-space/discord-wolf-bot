@@ -23,7 +23,7 @@ module.exports.run = async function (bot, msg, args) {
     var i = 0;
     var c = 0;
     var cc = 0;
-    bot.commands.forEach(command => {
+    bot.commands.forEach((command) => {
         // Befehle werden zum Menu hinzugefügt.
         if (!command.help.hidden) {
             c++;
@@ -31,7 +31,8 @@ module.exports.run = async function (bot, msg, args) {
             sites[i].push({
                 name: command.help.name,
                 description: command.help.description,
-                args: command.help.args
+                args: command.help.args,
+                alias: command.help.alias
             });
         }
         if (c >= commandsPerSite) {
@@ -52,7 +53,9 @@ module.exports.run = async function (bot, msg, args) {
         .setColor(0x000000)
         .setFooter(`Site ${(si + 1)} of ${sites.length} | ${cc} registered commands | ${commandsPerSite} commands per site`);
     sites[si].forEach((command) => {
-        embed.addField(`${prefix}${command.name} ${command.args}`, `${command.description}`, false);
+        var description = `${command.description}`;
+        if (command.alias.length != 0) description = `${description}\n**Aliases:** _${command.alias.toString().replace(",", ", ")}_`
+        embed.addField(`${prefix}${command.name} ${command.args}`, `${description}`, false);
     });
 
     // Sendet die Nachricht an den Server
@@ -65,8 +68,13 @@ module.exports.run = async function (bot, msg, args) {
  */
 module.exports.help = {
     name: 'help',
+    alias: [],
     description: 'Shows this help page.',
     args: '[number]',
+    requireAlpha: false,
+    requireBeta: false,
+    requireDev: false,
+    disabled: false,
     hidden: false,
     permissions: [
 

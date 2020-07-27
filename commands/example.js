@@ -9,7 +9,7 @@ const data = require('../package.json');
  */
 module.exports.run = async function (bot, msg, args) {
     // Dieser Befehl ist eine Beispiel-Forlage
-
+    msg.channel.send("Hallo " + msg.author.username);
 };
 
 /**
@@ -17,8 +17,13 @@ module.exports.run = async function (bot, msg, args) {
  */
 module.exports.help = {
     name: 'test',
+    alias: [],
     description: 'Yup. I\'m a description',
     args: '',
+    requireAlpha: false,
+    requireBeta: false,
+    requireDev: true,
+    disabled: false,
     hidden: true,
     permissions: [
         "ADMINISTRATOR"

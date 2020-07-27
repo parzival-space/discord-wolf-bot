@@ -39,8 +39,15 @@ module.exports.run = async function (bot, msg, args) {
  */
 module.exports.help = {
     name: 'back',
+    alias: [
+        'prev'
+    ],
     description: 'The counterpart to skip.',
     args: '',
+    requireAlpha: false,
+    requireBeta: false,
+    requireDev: false,
+    disabled: false,
     hidden: true,
     permissions: [
         "CONNECT"

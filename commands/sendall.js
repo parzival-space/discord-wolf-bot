@@ -59,8 +59,15 @@ module.exports.run = async function (bot, msg, args) {
  */
 module.exports.help = {
     name: 'sendall',
+    alias: [
+        'broadcast'
+    ],
     description: 'Writes a message to all server members.',
     args: '<message>',
+    requireAlpha: false,
+    requireBeta: false,
+    requireDev: false,
+    disabled: false,
     hidden: false,
     permissions: [
         "ADMINISTRATOR"

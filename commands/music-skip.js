@@ -31,8 +31,16 @@ module.exports.run = async function (bot, msg, args) {
  */
 module.exports.help = {
     name: 'skip',
+    alias: [
+        'next',
+        's'
+    ],
     description: 'Skipps the current playback.',
     args: '',
+    requireAlpha: false,
+    requireBeta: false,
+    requireDev: false,
+    disabled: false,
     hidden: true,
     permissions: [
         "CONNECT"

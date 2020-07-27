@@ -1,23 +1,25 @@
 const DiscordJS = require('discord.js');
 const fs = require('fs');
 const {join} = require('path');
-const { Console } = require('console');
-const { raw } = require('express');
+const prompt = require('prompt-sync')({sigint: true});
+const {spawn} = require('child_process');
 require('dotenv').config();
 
 /**
  * @description Erstellt einen neuen Discord Client
  */
 var bot = new DiscordJS.Client();
-bot.commands = new DiscordJS.Collection();
+bot.commands = new DiscordJS.Collection(); // Diese Liste ist für alle Befehle
+bot.aliases = new DiscordJS.Collection(); // Diese Liste ist für alle Aliase
 bot.data = {};
 
 /**
  * @description Main Function for registering new commands directly from the commands directory.
  * @author Parzival
  */
-bot.reagisterCommands = function() {
+bot.registerCommands = function() {
     // Erhalte eine Liste an Dateien aus dem Ordner './commands/' und verarbeite sie.
+    console.info("Loading commands...");
     fs.readdir('./commands/', (err, files) => {
 
         // Fehler: Liste konnte nicht erstellt werden.
@@ -30,7 +32,33 @@ bot.reagisterCommands = function() {
         // Registriert die Befehle in die Befehlsliste des Bot Clienten.
         jsfiles.forEach((f, i) => {
             let props = require(`./commands/${f}`);
-            bot.commands.set(props.help.name, props);
+            // Befehle die deaktiviert wurden, werden nicht geladen.
+            if (props.help.disabled == false) {
+                // Überprüfe ob bereits ein Alias oder Befehl registriert wurde mit diesen Namen
+                if (!bot.commands.get(props.help.name)) {
+                    // Der Befehl wird eingetragen
+                    bot.commands.set(props.help.name, props);
+
+
+                    // Update: 1.4.2 - Disco-Coon
+                    // Neues Alias-Sytem zum registrieren von Aliasen
+                    // Registriere ALiase
+                    props.help.alias.forEach(alias => {
+                        // Überprüfe ob bereits ein Alias oder Befehl registriert wurde mit diesen Namen
+                        if (!bot.aliases.get(alias)) {
+                            // Trage das Alias ein
+                            bot.aliases.set(alias, props);
+                        } else {
+                            // Das Alias oder der Befehl existieren bereits
+                            console.warn(`Possible conflict between commands detected! An command or alias with the name '${alias}' does already exist! Dublication in file: ${f}`);
+                        }
+                    })
+
+                } else {
+                    // Das Alias oder der Befehl existieren bereits
+                    console.warn(`Command '${props.help.name}' does already exist! Skipping dublicated command. Dublication in file: ${f}`);
+                }
+            }
         });
 
     });
@@ -153,6 +181,54 @@ bot.registerPlugins = function() {
  * @author Parzival
  */
 bot.beginnCommandHandle = function() {
+
+    // Erhalte eine Liste an informationen über Beta Tester für den Bot
+    bot.team = {
+        alpha: require('./data/users.json').alpha,
+        beta: require('./data/users.json').beta,
+        developers: require('./data/users.json').developers,
+    }
+
+    //Devs sind auch Alpha Tester sind auch Beta Tester
+    bot.team.developers.forEach(dev => {bot.team.alpha.push(dev); });
+    bot.team.alpha.forEach(dev => {bot.team.beta.push(dev); });
+
+    /**
+     * Überprüft ob ein Benutzer ein Entwickler dieses Bots ist.
+     * @param {DiscordJS.User} user 
+     */
+    bot.team.isDeveloper = function(user) {
+        var devEntry = bot.team.developers.find(d => d.id === user.id);
+        if (devEntry === undefined)
+            return false;
+        else
+            return true;
+    }
+
+    /**
+     * Überprüft ob ein Benutzer ein Alphatester dieses Bots ist.
+     * @param {DiscordJS.User} user 
+     */
+    bot.team.isAlphaTester = function(user) {
+        var devEntry = bot.team.alpha.find(d => d.id === user.id);
+        if (devEntry === undefined)
+            return false;
+        else
+            return true;
+    }
+
+    /**
+     * Überprüft ob ein Benutzer ein Betatetser dieses Bots ist.
+     * @param {DiscordJS.User} user 
+     */
+    bot.team.isBetaTester = function (user) {
+        var devEntry = bot.team.beta.find(d => d.id === user.id);
+        if (devEntry === undefined)
+            return false;
+        else
+            return true;
+    }
+
     // Es wird ein Listener für einkommende Nachrichten installiert.
     bot.on('message', (msg) => {
 
@@ -179,7 +255,7 @@ bot.beginnCommandHandle = function() {
             let args = msgArrays.slice(1);
     
             // Es wird versucht einen Befehl abzurufen, sollte einer vorhanden sein.
-            let cmdfile = bot.commands.get(cmd.slice(prefix.length).toLowerCase());
+            let cmdfile = (bot.commands.get(cmd.slice(prefix.length).toLowerCase()) || bot.aliases.get(cmd.slice(prefix.length).toLowerCase()));
             if (cmdfile) {
                 // Die Rechte des Benutzers werden überprüft.
                 if (msg.member.permissions.has(cmdfile.help.permissions) != true) {
@@ -197,11 +273,10 @@ bot.beginnCommandHandle = function() {
                     });
                 }
                 
-                // Die Nachricht die den Befehl ausgelöst hat wird gelöscht.
-                msg.delete({timeout: 500, reason: "Command executed."}).then((msg) => {
-                    console.log(`${msg.author.tag} executed command '${prefix}${cmdfile.help.name}' in channel '${msg.channel.name}' on guild '${msg.guild.name}' with following arguments: '${args}'`);
-                });
-                
+                if ((cmdfile.help.requireAlpha == true) && (bot.team.isAlphaTester(msg.author) == false)) return;
+                if ((cmdfile.help.requireBeta == true) && (bot.team.isBetaTester(msg.author) == false)) return;
+                if ((cmdfile.help.requireDev == true) && (bot.team.isDeveloper(msg.author) == false)) return;
+
                 // Führe den Befehl aus.
                 cmdfile.run(bot, msg, args).catch(err => {
                     var errMsg = new DiscordJS.MessageEmbed()
@@ -214,6 +289,25 @@ bot.beginnCommandHandle = function() {
                     console.error(`Failed to execute command '${cmd}' with arguments '${args}': ${err}`);
                 });
 
+                // Die Nachricht die den Befehl ausgelöst hat wird gelöscht.
+                msg.delete({timeout: 500, reason: "Command executed."}).then((msg) => {
+                    console.log(`${msg.author.tag} executed command '${prefix}${cmdfile.help.name}' in channel '${msg.channel.name}' on guild '${msg.guild.name}' with following arguments: '${args}'`);
+                }).catch(() => {});
+
+            } else {
+                // Der Befehl der ausgeführt werden sollte, wurde nicht gefunden.
+                var notFound = new DiscordJS.MessageEmbed()
+                    .setAuthor(`${bot.user.username} - Unknown command`, bot.user.avatarURL())
+                    .setTitle("Command not found")
+                    .setDescription(`Use \`${prefix}help\` or \`@${bot.user.tag} help\` to view the list of all commands.\n\nUnknown command:\n\`\`\`${rawMsg}\`\`\``)
+                    .setThumbnail("https://i.imgur.com/Fk96p9z.png")
+                    .setColor(0x000000);
+                msg.channel.send(notFound);
+
+                // Die Nachricht die den Befehl ausgelöst hat wird gelöscht.
+                msg.delete({timeout: 500, reason: "Command executed."}).then((msg) => {
+                    console.log(`${msg.author.tag} failed while executing unknown command '${prefix}${cmd}' in channel '${msg.channel.name}' on guild '${msg.guild.name}' with following arguments: '${args}'`);
+                }).catch(() => {});
             }
         }
     });
@@ -343,14 +437,32 @@ bot.initGuildHandler = function() {
     }
 }
 
+// Update 1.4.2 - Disco-Coon
+// Sollte kein Bot Token definiert sein wird der Benutzer nach einem Bot Token gefragt.
+if (!process.env.TOKEN) {
+    // Erkläre den Benutzer was passiert.
+    console.clear();
+    console.info("In order to allow this bot to interact with Discord a bot token is required.\n"+
+                 "Looks like you do not have specified such in you environment file (.env).\n"+
+                 "This tool will help you to register your bot application.\n"+
+                 "You don't have to re-enter your token after this.\n\n"+
+                 "Please create a new bot application at https://discord.com/developers then enter your new bot token here:");
+    const token = prompt("> ");
+
+    // Speichere den Token in .env
+    fs.writeFileSync(join(__dirname, '.env'), `TOKEN=${token}`);
+
+    // Lade alle ENV-Variablen neu
+    require('dotenv').config();
+}
 
 /**
- * @description Verbindet den Bot Clienten mit Discord
- * @author Parzival
+ * Wird ausgeführt nachdem sich der Bot angemeldet hat.
  */
-bot.login(process.env.TOKEN).then(() => {
+function BotConnected() {
     // Lösche die Konsole um mehr platz zu schaffen.
     console.clear();
+    var version = "Raccoon Bot v" + require('./package.json').version;
     console.log("                                                                                                                                \n"+
                 "       :::::::::      :::      ::::::::   ::::::::   ::::::::   ::::::::  ::::    :::          :::::::::   :::::::: ::::::::::: \n"+
                 "      :+:    :+:   :+: :+:   :+:    :+: :+:    :+: :+:    :+: :+:    :+: :+:+:   :+:          :+:    :+: :+:    :+:    :+:      \n"+
@@ -359,24 +471,56 @@ bot.login(process.env.TOKEN).then(() => {
                 "   +#+    +#+ +#+     +#+ +#+        +#+        +#+    +#+ +#+    +#+ +#+  +#+#+#          +#+    +#+ +#+    +#+    +#+         \n"+
                 "  #+#    #+# #+#     #+# #+#    #+# #+#    #+# #+#    #+# #+#    #+# #+#   #+#+#          #+#    #+# #+#    #+#    #+#          \n"+
                 " ###    ### ###     ###  ########   ########   ########   ########  ###    ####          #########   ########     ###           \n"+
-                `                                                     Raccoon Bot v${require('./package.json').version}`);
+                `${version.padStart((64 + (version.length / 2)))}\nToken accepted!`);
 
     // Der Bot ist mit Discord Verbunden. Zeit für ein paar Post-Startup-Skripte
-    bot.reagisterCommands();
     bot.initGuildHandler();
     bot.registerPlugins();
-    //bot.beginnLanguageHandle();
+    bot.registerCommands();
+    //bot.beginnLanguageHandle(); /// Deaktiviert bis ich eine verwendung
 
     // Nachdem der Bot mit seinem Post-Startup-Gedöns fertig ist kann er endlich anfangen Befehle anzunehmen.
     bot.beginnCommandHandle();
+}
 
-});
+/**
+ * Diese Funktion stellt das schnell registrieren für discord tokens dar.
+ * @param {} err 
+ */
+function HandleLoginFailure(err) {
+    if (err.toString() == "Error [TOKEN_INVALID]: An invalid token was provided.") {
+        // Wenn der Token ungültig ist wird der Benutzer aufgefordert einen neuen einzugeben.
+        // Erkläre den Benutzer was passiert.
+        console.clear();
+        console.info("Oops...\n"+
+                    "Looks like your token is not valid.\n\n"+
+                    "Please get your new bot token from https://discord.com/developer and enter it here:");
+        const token = prompt("> ");
+
+        // Speichere den Token in .env
+        fs.writeFileSync(join(__dirname, '.env'), `TOKEN=${token}`);
+
+        // Lade alle ENV-Variablen neu
+        require('dotenv').config();
+
+        // Startet die Anwendung neu.
+        bot.login(token).catch(HandleLoginFailure).then(BotConnected);
+    } else {
+        console.error(err);
+    }
+}
+
+/**
+ * @description Verbindet den Bot Clienten mit Discord
+ * @author Parzival
+ */
+bot.login(process.env.TOKEN).catch(HandleLoginFailure).then(BotConnected);
 
 // Wenn der Bot mit allen Post-Startup-Skripten fertig ist beginnt die eigentliche Arbeit.
-bot.once('ready', () => {
+bot.on('ready', () => {
     console.log(`${bot.user.tag} successfully connected.`);
     bot.user.setActivity("§help", {
         type: "LISTENING", 
         url: "https://open.spotify.com/track/6xbwZag48lCcSQtF377VXf"
     });
-})
+});

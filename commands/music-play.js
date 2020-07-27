@@ -222,8 +222,16 @@ async function AddYoutubeVideo(bot, msg, args, url) {
  */
 module.exports.help = {
     name: 'play',
-    description: 'Plays a song with the given name or url.',
+    alias: [
+        'resume',
+        'p'
+    ],
+    description: 'Plays a song with the given name or url.\nAllows you to stream videos from YouTube and songs from Spotify.',
     args: '[url/search query]',
+    requireAlpha: false,
+    requireBeta: false,
+    requireDev: false,
+    disabled: false,
     hidden: false,
     permissions: [
         "CONNECT"

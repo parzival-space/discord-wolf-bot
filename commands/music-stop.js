@@ -38,8 +38,13 @@ function stopVoice(bot, msg, args) {
  */
 module.exports.help = {
     name: 'stop',
+    alias: [],
     description: 'Stops the current playback.',
     args: '',
+    requireAlpha: false,
+    requireBeta: false,
+    requireDev: false,
+    disabled: false,
     hidden: false,
     permissions: [
         "CONNECT"

@@ -25,7 +25,7 @@
     "name": "FT22B - Sexy Mother",
     "options": {
         "prefix": "!",
-        "volume": 0.1,
+        "volume": 1,
         "joinrole": {
             "enabled": false,
             "roles": []

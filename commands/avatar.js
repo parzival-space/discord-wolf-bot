@@ -38,8 +38,13 @@ module.exports.run = async function (bot, msg, args) {
  */
 module.exports.help = {
     name: 'avatar',
+    alias: [],
     description: 'You want to see that picture?',
     args: '[@Mention]',
+    requireAlpha: false,
+    requireBeta: false,
+    requireDev: false,
+    disabled: false,
     hidden: false,
     permissions: [
         "ATTACH_FILES",

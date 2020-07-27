@@ -203,9 +203,14 @@ function SubUnknown(bot, msg, args) {
  */
 module.exports.help = {
     name: 'joinrole',
+    alias: [],
     description: 'Allows you to configure the join-role module.',
     args: '<enable/disable/add/remove/toggle> [@mention]',
+    requireAlpha: false,
+    requireBeta: false,
+    requireDev: false,
     hidden: false,
+    disabled: false,
     permissions: [
         "MANAGE_ROLES",
         "CREATE_INSTANT_INVITE",

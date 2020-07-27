@@ -48,8 +48,13 @@ module.exports.run = async function (bot, msg, args) {
  */
 module.exports.help = {
     name: 'prefix',
+    alias: [],
     description: 'Changes or shows the servers prefix.',
     args: '[prefix]',
+    requireAlpha: false,
+    requireBeta: false,
+    requireDev: false,
+    disabled: false,
     hidden: true,
     permissions: []
 };

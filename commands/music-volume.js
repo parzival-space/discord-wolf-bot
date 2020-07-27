@@ -26,7 +26,7 @@ module.exports.run = async function (bot, msg, args) {
     function ChangeVolume() {
         // Ist die Lautstärke über 100%?
         var input = Number(args[0]);
-        if ((input > 100) && (args[1] != "--overwrite")) {
+        if ((input > 100) && (bot.team.isAlphaTester(msg.author) == false)) {
             // Wenn das --overwrite tag nicht gegeben  ist werden keine Lautstärken über 100% erlaubt
             var res = new DiscordJS.MessageEmbed()
                 .setAuthor(`${bot.user.username} - Volume`, bot.user.avatarURL())
@@ -77,8 +77,15 @@ module.exports.run = async function (bot, msg, args) {
  */
 module.exports.help = {
     name: 'volume',
+    alias: [
+        'v'
+    ],
     description: 'Changes or shows the current playback volume.',
     args: '[volume]',
+    requireAlpha: false,
+    requireBeta: false,
+    requireDev: false,
+    disabled: false,
     hidden: false,
     permissions: [
         "CONNECT"

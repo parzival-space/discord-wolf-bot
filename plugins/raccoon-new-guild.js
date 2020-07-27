@@ -20,6 +20,7 @@ module.exports.run = function(bot) {
         // INFO: Der Bot löscht die Server.Konfiguration sollte bereits eine für diesen Server vorhanden sein.
 
         // Löscht eventuelle Server-Konfigurationen
+        // Wenn keine vorhanden ist wird eine neue erstellt.
         bot.resetGuildConfig(guild);
     })
 }

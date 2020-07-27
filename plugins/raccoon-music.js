@@ -8,7 +8,6 @@
 // Dieses Plugin benötigt weitere Module die noch nachgeladen werden müssen.
 const DiscordJS = require('discord.js');
 const ytdl = require('ytdl-core');
-const fetchVideoInfo = require('youtube-info');
 
 /**
  * @description Einstiegspunkt des Plugins
@@ -117,9 +116,9 @@ module.exports.run = function (bot) {
                     .setColor(0x000000);
                 msg.channel.send(out);
 
-                // Trenne Verbindung
-                connection.disconnect();
+                // Beende Wiedergabe
                 bot.music.server[s].dispatcher.destroy();
+                connection.disconnect();
             }
         });
     }

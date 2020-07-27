@@ -9,6 +9,7 @@ const data = require('../package.json');
  * Last
  */
 module.exports.run = async function (bot, msg, args) {
+    var prefix = bot.getGuildConfig(msg.guild).options.prefix;
 
     var title = "";
     data.name.split('-').forEach(x => {
@@ -19,10 +20,12 @@ module.exports.run = async function (bot, msg, args) {
         .setAuthor(`${bot.user.username} - About`, bot.user.avatarURL())
         .setTitle(title)
         .setURL(data.url)
+        .setColor(0x000000)
         .setDescription(data.description)
         .addField(`Version`, data.version, true)
         .addField(`Author`, `<@!${data.author.id}>`, true)
-        .setImage('https://i.imgur.com/TVY6FGJ.jpg');
+        .setImage('https://i.imgur.com/TVY6FGJ.jpg')
+        .setFooter(`List of changes in this update: https://shorturl.at/jmCFP`);
     return msg.channel.send(m);
 
 };
@@ -32,8 +35,13 @@ module.exports.run = async function (bot, msg, args) {
  */
 module.exports.help = {
     name: 'about',
+    alias: [],
     description: 'Displays information about the bot.',
     args: '',
+    requireAlpha: false,
+    requireBeta: false,
+    requireDev: false,
+    disabled: false,
     hidden: false,
     permissions: []
 };

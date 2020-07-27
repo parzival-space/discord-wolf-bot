@@ -51,8 +51,13 @@ module.exports.run = async function (bot, msg, args) {
  */
 module.exports.help = {
     name: 'lyrics',
+    alias: [],
     description: 'Lyrics baby!',
     args: '[song title]',
+    requireAlpha: false,
+    requireBeta: false,
+    requireDev: false,
+    disabled: false,
     hidden: false,
     permissions: [
         "CONNECT"

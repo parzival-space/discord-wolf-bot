@@ -1,6 +1,6 @@
 {
   "name": "discord-raccoon-bot",
-  "version": "1.4.2 - Disco-Coon",
+  "version": "1.4.2",
   "description": "Multi-Purpose Moderation / Auto-Moderation / Logging Bot",
   "url": "https://discordapp.com/oauth2/authorize?client_id=732918269333340230&scope=bot&permissions=8",
   "main": "./main.js",

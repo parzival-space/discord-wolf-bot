@@ -49,5 +49,6 @@ module.exports.run = function() {
 module.exports.help = {
     apiVersion: 1,
     pluginType: "PLUGIN",
-    name: "raccoon-colors"
+    name: "raccoon-colors",
+    enabled: true
 }

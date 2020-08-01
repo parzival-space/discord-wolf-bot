@@ -27,15 +27,16 @@ module.exports.run = async function (bot, msg, args) {
 module.exports.help = {
     name: 'clear',
     alias: [
-        'bulk'
+        'bulk',
+        'purge'
     ],
     description: 'Bulk delete messages.',
     args: '[number]',
     requireAlpha: false,
     requireBeta: false,
-    requireDev: true,
+    requireDev: false,
     disabled: false,
-    hidden: true,
+    hidden: false,
     permissions: [
         "MANAGE_MESSAGES"
     ]

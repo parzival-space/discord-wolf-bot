@@ -31,5 +31,6 @@ module.exports.run = function(bot) {
 module.exports.help = {
     apiVersion: 2,
     pluginType: "PLUGIN",
-    name: "raccoon-new-guild"
+    name: "raccoon-new-guild",
+    enabled: true
 }

@@ -30,5 +30,6 @@ module.exports.run = function() {
 module.exports.help = {
     apiVersion: 1,
     pluginType: "OVERWRITE",
-    name: "app-heroku"
+    name: "app-heroku",
+    enabled: false
 }

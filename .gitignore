@@ -107,4 +107,4 @@ dist
 .vscode/
 
 # Andere Dateien die mich nerven
-./package-lock.json
+#./package-lock.json

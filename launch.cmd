@@ -4,11 +4,11 @@ title Starting...
 :launch
 
 if exist "node_modules" (
-    node .
+    npm start
 ) else (
     echo node_modules is missing!
     echo installing modules...
-    npm i
+    npm install
     CLS
     goto launch
 )

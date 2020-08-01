@@ -45,5 +45,6 @@ module.exports.run = function(bot) {
 module.exports.help = {
     apiVersion: 2,
     pluginType: "ADDON",
-    name: "raccoon-joinrole"
+    name: "raccoon-joinrole",
+    enabled: true
 }

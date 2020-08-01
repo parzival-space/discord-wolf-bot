@@ -1,6 +1,28 @@
 
 # Version History
 
+## 1.5.0 - Die namenlose Version
+
+- Fixes
+  - Nichts
+- Neue Funktion
+  - Tolle neue Funktion! Dank Heroku kann man jetzt Plugins deaktivieren!
+  - Der 'bird'-Befehl wurde hinzugefügt ^.^
+  - Der 'cat'-Befehl wurde hinzugefügt ^.^
+  - Der 'dog'-Befehl wurde hinzugefügt ^.^
+  - Der 'fox'-Befehl wurde hinzugefügt ^.^
+  - Der 'koala'-Befehl wurde hinzugefügt ^.^
+  - Der 'panda'-Befehl wurde hinzugefügt ^.^
+  - Der 'pikachu'-Befehl wurde hinzugefügt ^.^
+  - Der 'red_panda'-Befehl wurde hinzugefügt ^.^
+  - Der 'tfdne'-Befehl wurde hinzugefügt unterstützt durch This Fursona Does Not Exist (versteckter Befehl).
+- Entfernt
+  - Heroku ist jetzt erstmal deaktiviert aufrgund von inkompetenz.
+- Änderung
+  - Nichts
+- Anmerkung
+  - Nichts
+
 ## 1.4.3.2 - Hotfix
 
 - Fixes

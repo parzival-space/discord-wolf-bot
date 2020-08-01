@@ -25,7 +25,7 @@ module.exports.run = async function (bot, msg, args) {
         .addField(`Version`, data.version, true)
         .addField(`Author`, `<@!${data.author.id}>`, true)
         .setImage('https://i.imgur.com/TVY6FGJ.jpg')
-        .setFooter(`List of changes in this update: https://shorturl.at/jmCFP`);
+        .setFooter(`https://github.com/parzival-games/discord-raccoon-bot`);
     return msg.channel.send(m);
 
 };

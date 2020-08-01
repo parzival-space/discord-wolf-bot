@@ -146,20 +146,36 @@ bot.registerPlugins = function() {
         // PLUGIN => UNKNOWN => ADDON => OVERWRITE
         var pluginCount = loadOrder.plugin.length + loadOrder.unknown.length + loadOrder.addon.length + loadOrder.overwrite.length;
         loadOrder.plugin.forEach((plugin, i) => {
-            console.log(`Loading Plugin '${plugin.help.name}' ${i + 1} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
-            loadPlugin(plugin);
+            if (plugin.help.enabled) {
+                console.log(`Loading Plugin '${plugin.help.name}' ${i + 1} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
+                loadPlugin(plugin);
+            } else {
+                console.debug(`Skipping disabled Plugin '${plugin.help.name}' ${i + 1} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
+            }
         });
         loadOrder.unknown.forEach((plugin, i) => {
-            console.log(`Loading Plugin '${plugin.help.name}' ${loadOrder.plugin.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
-            loadPlugin(plugin);
+            if (plugin.help.enabled) {
+                console.log(`Loading Plugin '${plugin.help.name}' ${loadOrder.plugin.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
+                loadPlugin(plugin);
+            } else {
+                console.debug(`Skipping disabled Plugin '${plugin.help.name}' ${loadOrder.plugin.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
+            }
         });
         loadOrder.addon.forEach((plugin, i) => {
-            console.log(`Loading Plugin '${plugin.help.name}' ${loadOrder.plugin.length + loadOrder.unknown.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
-            loadPlugin(plugin);
+            if (plugin.help.enabled) {
+                console.log(`Loading Plugin '${plugin.help.name}' ${loadOrder.plugin.length + loadOrder.unknown.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
+                loadPlugin(plugin);
+            } else {
+                console.debug(`Skipping disabled Plugin '${plugin.help.name}' ${loadOrder.plugin.length + loadOrder.unknown.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
+            }
         });
         loadOrder.overwrite.forEach((plugin, i) => {
-            console.log(`Loading Plugin '${plugin.help.name}' ${loadOrder.plugin.length + loadOrder.addon.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
-            loadPlugin(plugin);
+            if (plugin.help.enabled) {
+                console.log(`Loading Plugin '${plugin.help.name}' ${loadOrder.plugin.length + loadOrder.addon.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
+                loadPlugin(plugin);
+            } else {
+                console.debug(`Skipping disabled Plugin '${plugin.help.name}' ${loadOrder.plugin.length + loadOrder.addon.length + (i + 1)} / ${pluginCount} (API v${plugin.help.apiVersion})...`);
+            }
         });
     });
 }
@@ -287,12 +303,12 @@ bot.beginnCommandHandle = function() {
                         .setColor(0x000000);
                     msg.channel.send(errMsg);
                     console.error(`Failed to execute command '${cmd}' with arguments '${args}': ${err}`);
+                }).then(() => {
+                    console.log(`${msg.author.tag} executed command '${prefix}${cmdfile.help.name}' in channel '${msg.channel.name}' on guild '${msg.guild.name}' with following arguments: '${args}'`);
                 });
 
                 // Die Nachricht die den Befehl ausgelöst hat wird gelöscht.
-                msg.delete({timeout: 500, reason: "Command executed."}).then((msg) => {
-                    console.log(`${msg.author.tag} executed command '${prefix}${cmdfile.help.name}' in channel '${msg.channel.name}' on guild '${msg.guild.name}' with following arguments: '${args}'`);
-                }).catch(() => {});
+                msg.delete({timeout: 500, reason: "Command executed."}).then((msg) => {}).catch(() => {});
 
             } else {
                 // Der Befehl der ausgeführt werden sollte, wurde nicht gefunden.

@@ -1,6 +1,19 @@
 
 # Version History
 
+## 1.5.1 - Hotfix
+
+- Fixes
+  - Nichts
+- Neue Funktion
+  - Procfile hinzugefügt.
+- Entfernt
+  - Nichts
+- Änderung
+  - Nichts
+- Anmerkung
+  - Nichts
+
 ## 1.5.0 - Die namenlose Version
 
 - Fixes

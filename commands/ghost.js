@@ -20,7 +20,7 @@ module.exports.run = async function (bot, msg, args) {
         return msg.channel.send(err);
     }
 
-    var amount = (Math.floor(Number(arg[1])) || 10);
+    var amount = (Math.floor(Number(args[1])) || 10);
     var target = msg.guild.members.cache.find(m => m.id === args[0].replace("<@", "").replace("!", "").replace("<@&", "").replace(">", ""));
     if (target == undefined) {
         var prefix = bot.getGuildConfig(msg.guild).options.prefix;

@@ -24,8 +24,8 @@ module.exports.run = async function (bot, msg, args) {
         .setDescription(data.description)
         .addField(`Version`, data.version, true)
         .addField(`Author`, `<@!${data.author.id}>`, true)
-        .setImage('https://i.imgur.com/TVY6FGJ.jpg')
-        .setFooter(`https://github.com/parzival-games/discord-raccoon-bot`);
+        .setImage('https://i.imgur.com/I96iTcf.jpg')
+        .setFooter(`https://github.com/cyberfen/discord-raccoon-bot`);
     return msg.channel.send(m);
 
 };

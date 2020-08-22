@@ -1,6 +1,21 @@
 
 # Version History
 
+## 1.5.2 - Wolf Bot
+
+- Fixes
+  - Nichts
+- Neue Funktion
+  - Procfile hinzugefügt.
+- Entfernt
+  - Nichts
+- Änderung
+  - Name geändert: Der Bot heißt jetzt "Wolf Bot"
+  - Avatar geändert.
+  - Fullview-Avatar geändert.
+- Anmerkung
+  - Nichts
+
 ## 1.5.1 - Hotfix
 
 - Fixes

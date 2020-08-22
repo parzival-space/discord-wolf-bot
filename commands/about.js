@@ -25,7 +25,7 @@ module.exports.run = async function (bot, msg, args) {
         .addField(`Version`, data.version, true)
         .addField(`Author`, `<@!${data.author.id}>`, true)
         .setImage('https://i.imgur.com/I96iTcf.jpg')
-        .setFooter(`https://github.com/cyberfen/discord-raccoon-bot`);
+        .setFooter(`http://cyberfen.eu/wolf`);
     return msg.channel.send(m);
 
 };

@@ -20,9 +20,9 @@
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/parzival-games/discord-raccoon-bot/issues"
+    "url": "https://github.com/cyberfen/discord-worlf-bot/issues"
   },
-  "homepage": "https://github.com/parzival-games/discord-raccoon-bot#readme",
+  "homepage": "http://cyberfen.eu/wolf",
   "dependencies": {
     "colors": "^1.4.0",
     "discord.js": "^12.2.0",

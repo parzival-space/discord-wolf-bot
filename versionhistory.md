@@ -13,6 +13,7 @@
   - Name geändert: Der Bot heißt jetzt "Wolf Bot"
   - Avatar geändert.
   - Fullview-Avatar geändert.
+  - Urls durch CyberFen.eu Adressen ersetzt.
 - Anmerkung
   - Nichts
 

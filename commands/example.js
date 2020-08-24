@@ -22,9 +22,9 @@ module.exports.help = {
     args: '',
     requireAlpha: false,
     requireBeta: false,
-    requireDev: true,
-    disabled: false,
-    hidden: true,
+    requireDev: false,
+    disabled: true,
+    hidden: false,
     permissions: [
         "ADMINISTRATOR"
     ]

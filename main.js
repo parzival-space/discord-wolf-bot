@@ -258,7 +258,7 @@ bot.beginnCommandHandle = function() {
         let altPrefix2 = `${bot.user.id.replace("!", "&")}`;
     
         // Die Nachricht wird auf eventuelle Befehle überprüft.
-        if (msg.content.toString().split('')[0] === prefix) ExecuteCommand(false);
+        if (msg.content.toString().startsWith(prefix)) ExecuteCommand(false);
         else if (msg.content.startsWith(altPrefix1) == true) ExecuteCommand(true);
         else if (msg.content.startsWith(altPrefix2) == true) ExecuteCommand(true);
 
@@ -478,16 +478,15 @@ if (!process.env.TOKEN) {
 function BotConnected() {
     // Lösche die Konsole um mehr platz zu schaffen.
     console.clear();
-    var version = "Raccoon Bot v" + require('./package.json').version;
-    console.log("                                                                                                                                \n"+
-                "       :::::::::      :::      ::::::::   ::::::::   ::::::::   ::::::::  ::::    :::          :::::::::   :::::::: ::::::::::: \n"+
-                "      :+:    :+:   :+: :+:   :+:    :+: :+:    :+: :+:    :+: :+:    :+: :+:+:   :+:          :+:    :+: :+:    :+:    :+:      \n"+
-                "     +:+    +:+  +:+   +:+  +:+        +:+        +:+    +:+ +:+    +:+ :+:+:+  +:+          +:+    +:+ +:+    +:+    +:+       \n"+
-                "    +#++:++#:  +#++:++#++: +#+        +#+        +#+    +:+ +#+    +:+ +#+ +:+ +#+          +#++:++#+  +#+    +:+    +#+        \n"+
-                "   +#+    +#+ +#+     +#+ +#+        +#+        +#+    +#+ +#+    +#+ +#+  +#+#+#          +#+    +#+ +#+    +#+    +#+         \n"+
-                "  #+#    #+# #+#     #+# #+#    #+# #+#    #+# #+#    #+# #+#    #+# #+#   #+#+#          #+#    #+# #+#    #+#    #+#          \n"+
-                " ###    ### ###     ###  ########   ########   ########   ########  ###    ####          #########   ########     ###           \n"+
-                `${version.padStart((64 + (version.length / 2)))}\nToken accepted!`);
+    var version = "Wolf Bot v" + require('./package.json').version;
+    console.log("     :::       :::  ::::::::  :::        ::::::::::          :::::::::   :::::::: ::::::::::: \n"+
+                "    :+:       :+: :+:    :+: :+:        :+:                 :+:    :+: :+:    :+:    :+:      \n"+
+                "   +:+       +:+ +:+    +:+ +:+        +:+                 +:+    +:+ +:+    +:+    +:+       \n"+
+                "  +#+  +:+  +#+ +#+    +:+ +#+        :#::+::#            +#++:++#+  +#+    +:+    +#+        \n"+
+                " +#+ +#+#+ +#+ +#+    +#+ +#+        +#+                 +#+    +#+ +#+    +#+    +#+         \n"+
+                " #+#+# #+#+#  #+#    #+# #+#        #+#                 #+#    #+# #+#    #+#    #+#          \n"+
+                " '##   ###    ########  ########## ###                 #########   ########     ###           \n"+
+                `${version.padStart((45 + (version.length / 2)))}\nToken accepted!`);
 
     // Der Bot ist mit Discord Verbunden. Zeit für ein paar Post-Startup-Skripte
     bot.initGuildHandler();
@@ -510,7 +509,7 @@ function HandleLoginFailure(err) {
         console.clear();
         console.info("Oops...\n"+
                     "Looks like your token is not valid.\n\n"+
-                    "Please get your new bot token from https://discord.com/developer and enter it here:");
+                    "Please get your new bot token from https://discord.com/developers and enter it here:");
         const token = prompt("> ");
 
         // Speichere den Token in .env

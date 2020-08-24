@@ -105,6 +105,7 @@ dist
 
 # Visual Studio Code files
 .vscode/
+./discord-wolf-bot.code-workspace
 
 # Andere Dateien die mich nerven
 #./package-lock.json

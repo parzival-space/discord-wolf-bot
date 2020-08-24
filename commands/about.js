@@ -9,7 +9,6 @@ const data = require('../package.json');
  * Last
  */
 module.exports.run = async function (bot, msg, args) {
-    var prefix = bot.getGuildConfig(msg.guild).options.prefix;
 
     var title = "";
     data.name.split('-').forEach(x => {
@@ -18,14 +17,15 @@ module.exports.run = async function (bot, msg, args) {
 
     var m = new DiscordJS.MessageEmbed()
         .setAuthor(`${bot.user.username} - About`, bot.user.avatarURL())
-        .setTitle(title)
+        .setTitle(`Discord ${bot.user.username}`)
         .setURL(data.url)
         .setColor(0x000000)
         .setDescription(data.description)
-        .addField(`Version`, data.version, true)
-        .addField(`Author`, `<@!${data.author.id}>`, true)
-        .setImage('https://i.imgur.com/I96iTcf.jpg')
-        .setFooter(`http://cyberfen.eu/wolf`);
+        .addField(`Version`, data.version, false)
+        .addField(`Author`, `<@!${data.author.id}>`, false)
+        .addField(`Email`, `${data.author.email}`, false)
+        .setImage(bot.user.avatarURL({size: 4096, dynamic: true}))
+        .setFooter(`http://cyberfen.eu/wolf`); 
     return msg.channel.send(m);
 
 };

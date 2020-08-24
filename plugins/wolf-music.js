@@ -1,5 +1,5 @@
 /**
- * @name raccoon-music.js
+ * @name wolf-music.js
  * @description Dieses Plugin wird zum laden und verarbeiten von Playlists und
  * @author Parzival
  * @version 1.1.0.0
@@ -170,6 +170,6 @@ module.exports.run = function (bot) {
 module.exports.help = {
     apiVersion: 2,
     pluginType: "ADDON",
-    name: "raccoon-music",
+    name: "wolf-music",
     enabled: true
 }

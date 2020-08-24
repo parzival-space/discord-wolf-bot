@@ -1,6 +1,43 @@
 
 # Version History
 
+## 1.5.3 - Code-Review #1
+
+- Fixes
+  - Ein benutzerdefinierter Prefix kann jetzt länger als ein Zeichen sein.
+- Neue Funktion
+  - Der nervtötenste Befehl wurde hinzugefügt: 'spam'.
+  - Er ist endlich da, wir alle haben ihn erwartet: Der 'weather' Befehl òwó
+- Entfernt
+  - Das Plugin 'app-heroku.js' wurde entfernt.
+- Änderung
+  - Kleine Änderungen in dem 'about'-Befehl
+    - Der Avatar wird automatisch geladen.
+    - Der Titel des Programms wird jetzt aus dem Benutzernamen geladen.
+    - Die Informationen und Kontaktdaten sind jetzt in einzelnen Zeilen eingeteilt.
+    - Kontakt E-Mail hinzugefügt.
+    - Projekt URL geändert.
+  - Die Dateinamen der Tier-Befehle wurden geändert:
+    - bird.js => animal-bird.js
+    - cat.js => animal-cat.js
+    - dog.js => animal-dog.js
+    - fox.js => animal-fox.js
+    - koala.js => animal-koala.js
+    - panda.js => animal-panda.js
+    - red_panda.js => animal-red_panda.js
+  - Die Formatierung des 'sendall'-Befehls wurde geändert:
+    - Thumbnail wurde entfernt.
+    - Das Author-Icon wurde zum Server-Icon geändert.
+    - Der Titel 'Message from {{guildname}}' wurde in '{{guildname}}' geändert.
+  - Die Dateinamen der Plugins wurden geändert:
+    - raccoon-colors.js => wolf-colors.js
+    - raccoon-joinrole.js => wolf-joinrole.js
+    - raccoon-music.js => wolf-music.js
+    - raccoon-new-guild.js => wolf-new-guild.js
+  - Das Ascii-Art Logo in der Konsole wurde geändert.
+- Anmerkung
+  - Nicht mehr gültige Todo- und Hack-Tags wurden entfernt.
+
 ## 1.5.2 - Wolf Bot
 
 - Fixes

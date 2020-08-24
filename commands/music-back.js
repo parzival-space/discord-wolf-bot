@@ -23,7 +23,6 @@ module.exports.run = async function (bot, msg, args) {
         return msg.channel.send(errVoice);
     }
 
-    // HACK: Eventuell kann der 'back' befehl kaputt gehen
     var queue = [{}];
     queue.push(bot.music.server[s].rewind[0]);
     bot.music.server[s].queue.forEach((entry) => {

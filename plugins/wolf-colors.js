@@ -1,5 +1,5 @@
 /**
- * @name raccoon-colors.js
+ * @name wolf-colors.js
  * @description Überschreibt die farblose Standartausgabe mit einem Format welches Farbe nutzt.
  * @author Parzival
  * @version 1.0.0.0
@@ -49,6 +49,6 @@ module.exports.run = function() {
 module.exports.help = {
     apiVersion: 1,
     pluginType: "PLUGIN",
-    name: "raccoon-colors",
+    name: "wolf-colors",
     enabled: true
 }

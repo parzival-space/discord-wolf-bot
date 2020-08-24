@@ -32,8 +32,7 @@ module.exports.run = async function (bot, msg, args) {
 
     // Bereite die Nachricht vor die an alle Mitglieder gesendet werden soll.
     var message = new DiscordJS.MessageEmbed()
-        .setAuthor(`Message from ${msg.guild.name}`, msg.author.avatarURL())
-        .setThumbnail(msg.guild.iconURL())
+        .setAuthor(`${msg.guild.name}`, msg.guild.iconURL())
         .setFooter(`Message sent by ${msg.author.tag}`)
         .setDescription(message);
 

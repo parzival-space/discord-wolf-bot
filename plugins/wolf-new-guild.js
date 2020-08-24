@@ -1,5 +1,5 @@
 /**
- * @name raccoon-new-guild.js
+ * @name wolf-new-guild.js
  * @description Dieses Plugin sorgt dafür das der Bot sich bei allen vorstellt wenn er einem Server beitritt.
  * @author Parzival
  * @version 1.0.0.0
@@ -31,6 +31,6 @@ module.exports.run = function(bot) {
 module.exports.help = {
     apiVersion: 2,
     pluginType: "PLUGIN",
-    name: "raccoon-new-guild",
+    name: "wolf-new-guild",
     enabled: true
 }

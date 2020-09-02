@@ -2,7 +2,7 @@
   "name": "discord-wolf-bot",
   "version": "1.5.3",
   "description": "Multi-Purpose Moderation / Auto-Moderation / Logging Bot",
-  "url": "https://discordapp.com/oauth2/authorize?client_id=732918269333340230&scope=bot&permissions=8",
+  "url": "https://discordapp.com/oauth2/authorize?client_id=712760416778059916&scope=bot&permissions=8",
   "main": "./main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

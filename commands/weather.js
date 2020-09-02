@@ -77,7 +77,7 @@ module.exports.help = {
     args: '<play>',
     requireAlpha: false,
     requireBeta: false,
-    requireDev: true,
+    requireDev: false,
     disabled: false,
     hidden: false,
     permissions: [

@@ -9,7 +9,6 @@ require('dotenv').config();
  * @description Erstellt einen neuen Discord Client
  */
 var bot = new DiscordJS.Client();
-bot.shard = new DiscordJS.ShardClientUtil(bot, 'process');
 bot.commands = new DiscordJS.Collection(); // Diese Liste ist für alle Befehle
 bot.aliases = new DiscordJS.Collection(); // Diese Liste ist für alle Aliase
 bot.data = {};
@@ -39,7 +38,6 @@ bot.registerCommands = function() {
                 if (!bot.commands.get(props.help.name)) {
                     // Der Befehl wird eingetragen
                     bot.commands.set(props.help.name, props);
-
 
                     // Update: 1.4.2 - Disco-Coon
                     // Neues Alias-Sytem zum registrieren von Aliasen

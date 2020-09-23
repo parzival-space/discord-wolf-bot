@@ -19,7 +19,7 @@ module.exports.run = function (bot) {
      * @param {DiscordJS.Message} msg
      */
     bot.on("message", async (msg) => {
-        if (msg.author.bot) return;
+        if (msg.author.id == bot.user.id) return;
         if (msg.channel.id="758083270943703101") {
             var msgs = await (await msg.channel.messages.fetch({limit: 2})).array();
             var oldMsg = msgs.pop();

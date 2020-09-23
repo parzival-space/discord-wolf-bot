@@ -19,20 +19,21 @@ module.exports.run = function (bot) {
      * @param {DiscordJS.Message} msg
      */
     bot.on("message", async (msg) => {
-        if (msg.author.id == bot.user.id) return;
-        if (msg.channel.id="758083270943703101") {
-            var msgs = await (await msg.channel.messages.fetch({limit: 2})).array();
-            var oldMsg = msgs.pop();
-            var newMsg = msgs.pop();
-
-            var oldNumber = Number(oldMsg.content.split(' ')[0]) || -1;
-            var newNumber = Number(newMsg.content.split(' ')[0]) || -1;
-
-            if (oldNumber != (newNumber - 1)) {
-                msg.delete().catch();
-                /*msg.channel.send("!warn <@!" + msg.author.id + "> Can't count!").then(asr => {
-                    asr.delete({timeout: 750}).catch();
-                }).catch();*/
+        if (msg.author.id != bot.user.id){
+            if (msg.channel.id=="758083270943703101") {
+                var msgs = await (await msg.channel.messages.fetch({limit: 2})).array();
+                var oldMsg = msgs.pop();
+                var newMsg = msgs.pop();
+    
+                var oldNumber = Number(oldMsg.content.split(' ')[0]) || -1;
+                var newNumber = Number(newMsg.content.split(' ')[0]) || -1;
+    
+                if (oldNumber != (newNumber - 1)) {
+                    msg.delete().catch();
+                    /*msg.channel.send("!warn <@!" + msg.author.id + "> Can't count!").then(asr => {
+                        asr.delete({timeout: 750}).catch();
+                    }).catch();*/
+                }
             }
         }
     });

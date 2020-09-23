@@ -18,11 +18,22 @@ module.exports.run = function (bot) {
     /**
      * @param {DiscordJS.Message} msg
      */
-    bot.on("message", (msg) => {
-        if (msg.author.id == "631117170306449428") {
-            msg.delete({ timeout: 0, reason: "Member+ Command bypass" }).then(() => {
-                msg.author.send("Sorry, but we disabled this command. Please use your Member+ Dashboard instead.\n - " + msg.guild.name + " Team").catch(() => {});
-            }).catch(() => {});
+    bot.on("message", async (msg) => {
+        if (msg.author.bot) return;
+        if (msg.channel.id="758083270943703101") {
+            var msgs = await (await msg.channel.messages.fetch({limit: 2})).array();
+            var oldMsg = msgs.pop();
+            var newMsg = msgs.pop();
+
+            var oldNumber = Number(oldMsg.content.split(' ')[0]) || -1;
+            var newNumber = Number(newMsg.content.split(' ')[0]) || -1;
+
+            if (oldNumber != (newNumber - 1)) {
+                msg.delete().catch();
+                /*msg.channel.send("!warn <@!" + msg.author.id + "> Can't count!").then(asr => {
+                    asr.delete({timeout: 750}).catch();
+                }).catch();*/
+            }
         }
     });
 }

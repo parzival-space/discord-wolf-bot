@@ -75,8 +75,8 @@ module.exports.run = function (bot) {
             .setURL(`${server.queue[0].url}`)
             .setDescription(`by ${server.queue[0].author}`)
             .setImage(`${server.queue[0].image}`)
-            .addField(`Likes`, server.queue[0].likes, true)
-            .addField(`Dislikes`, server.queue[0].dislikes, true)
+            .addField(`Likes`, `${server.queue[0].likes}`, true)
+            .addField(`Dislikes`, `${server.queue[0].dislikes}`, true)
             .setColor(0x000000);
         msg.channel.send(res);
 

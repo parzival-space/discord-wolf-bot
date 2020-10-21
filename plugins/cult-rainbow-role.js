@@ -14,8 +14,9 @@ const DiscordJS = require('discord.js');
  */
 module.exports.run = function (bot) {
 
-    bot.on("ready", () => {
+    /*bot.on("ready", () => {
         var cult = bot.guilds.cache.find(g => g.id === "751734515420102737");
+        var role = cult.roles.cache.find(r => r.id === "768382603379998720");
         var delay = 1000;
         var colors = [
             "#FF0000",
@@ -30,23 +31,11 @@ module.exports.run = function (bot) {
         if (cult == undefined) return;
         console.log(`Detected Server: ${cult.name}`);
 
-        var stage = 0;
-        var lastID = "";
-        var doRainbow = setInterval(function() {
-            // FIND ROLE
-            var role;
-            role = cult.roles.cache.find(r => r.id === lastID);
-            if (role == undefined) {
-                // ROLE NOT FOUND
-                role = cult.roles.cache.find(r => r.name === "{{RAINBOW}}");
-                lastID = role.id;
-            }
-            if (role == undefined) {
-                lastID = "";
-                return;
-            }
+        if (role == undefined) return;
+        console.log(`Detected Role: ${role.name}`);
 
-            // ANIMATION
+        var stage = 0;
+        var doRainbow = setInterval(function() {
             if (stage + 1 === colors.length) stage = 0;
             var currentColor = colors[stage];
 
@@ -54,7 +43,7 @@ module.exports.run = function (bot) {
 
             stage++;
         }, delay);
-    });
+    });*/
 };
 
 /**
